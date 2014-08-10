@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+## 为了任务结束不关闭vagrant
+BUILD_NUMBER2=${BUILD_NUMBER}
+BUILD_NUMBER=dontkillme
+set -x 
+mkdir -p ~/apps
+cd ~/apps
+if [ ! -d "ansible.ubuntu.phabricator.runtime" ];then
+	git clone git@github.com:gnuhub/ansible.ubuntu.phabricator.runtime.git	
+fi
+
+cd ansible.ubuntu.phabricator.runtime
+vagrant destroy -f
+git pull origin master
+vagrant up
+sleep 10
+# 开始恢复
+
+vagrant ssh -c "sudo su -l root -c '/vagrant/phabricator.restore.sh ${BUCKUP_NUMBER}'"
+sleep 2
+./run all
