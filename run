@@ -17,7 +17,7 @@ function s.config
 	vagrant ssh -c "sudo su -l root -c 'apt-get install -y rbenv'"
 	vagrant ssh -c "sudo su -l root -c '/var/www/html/phabricator-server/phabricator/bin/config set phabricator.timezone \"Asia/Shanghai\"'"
 	vagrant ssh -c "sudo su -l root -c '/var/www/html/phabricator-server/phabricator/bin/config set storage.local-disk.path \"/opt/files\"'"
-	vagrant ssh -c "sudo su -l root -c '/var/www/html/phabricator-server/phabricator/bin/config set phabricator.base-uri \"http://p.gnuhub.com\"'"
+	vagrant ssh -c "sudo su -l root -c '/var/www/html/phabricator-server/phabricator/bin/config set phabricator.base-uri \"http://home.gnuhub.com:8888\"'"
 	# 修正文件上传大小问题 https://github.com/gnuhub/ansible.ubuntu.phabricator/issues/21
 	vagrant ssh -c "sudo sed -i 's/^post_max_size.*/post_max_size = 20000M/g' /etc/php5/apache2/php.ini"
 	vagrant ssh -c "sudo sed -i 's/^upload_max_filesize.*/upload_max_filesize = 20000M/g' /etc/php5/apache2/php.ini"
