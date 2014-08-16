@@ -10,12 +10,15 @@ if [ ! -d "ansible.ubuntu.phabricator.runtime" ];then
 fi
 
 cd ansible.ubuntu.phabricator.runtime
-vagrant destroy -f
-git pull origin master
+if [ x"RESTORE_FROM_BACKUP" = x"true" ];then
+	vagrant destroy -f
+fi
+
 vagrant up
 sleep 10
 # 开始恢复
-
-vagrant ssh -c "sudo su -l root -c '/vagrant/phabricator.restore.sh ${BUCKUP_NUMBER}'"
+if [ x"RESTORE_FROM_BACKUP" = x"true" ];then
+	vagrant ssh -c "sudo su -l root -c '/vagrant/phabricator.restore.sh ${BUCKUP_NUMBER}'"
+fi
 sleep 2
 ./run all
